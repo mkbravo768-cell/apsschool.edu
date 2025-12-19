@@ -1,0 +1,238 @@
+
+
+
+<!DOCTYPE html><html lang="en">
+<head>
+
+
+  <!-- Local image (must be in the same folder or correct path) -->
+    <img src="3.jpg" alt="Best Offers" width="1500">
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APS.edu School – Bright Future For Your Child</title>
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:#f2f4f7}
+header{background:#0a4fb3;color:#fff;padding:15px;display:flex;align-items:center}
+header img{height:70px;border-radius:8px;margin-right:15px}
+nav{background:#063a86;padding:10px;text-align:center}
+nav a{color:#fff;margin:0 12px;text-decoration:none;font-weight:600}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+h2{color:#0a4fb3}
+input,textarea,button{width:100%;padding:10px;margin-top:8px;border-radius:6px;border:1px solid #ccc}
+button{background:#0a4fb3;color:#fff;border:none;cursor:pointer}
+button.danger{background:#c0392b}
+.post{border-bottom:1px solid #ddd;padding:15px 0}
+.post img,.post video{max-width:100%;margin-top:10px;border-radius:10px}
+.actions button{width:auto;margin-right:5px}
+footer{background:#222;color:#fff;text-align:center;padding:15px}
+.hidden{display:none}
+</style>
+</head>
+<body><header>
+<head>
+<!-- Local image (must be in the same folder or correct path) -->
+   
+<img src="4.jpg" width="100" height="300" alt="Description of image">
+
+        
+ 
+<div>
+<h1><right>APS.edu School</right></h1>
+<p><b>Bright Future For Your Child</b></p>
+</div>
+</header>
+
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flying Text Bar</title>
+<style>
+  /* Container for the flying text */
+  .flying-bar {
+    position: relative;
+    overflow: hidden;
+    background-color: #222; /* Bar background */
+    color: #fff;           /* Text color */
+    height: 40px;          /* Bar height */
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+
+  /* The moving text */
+  .flying-text {
+    position: absolute;
+    white-space: nowrap;
+    animation: fly 40s linear infinite;
+  }
+
+  /* Keyframes for animation */
+  @keyframes fly {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+</style>
+</head>
+<body>
+
+<div class="flying-bar">
+  <div class="flying-text">🚀 Welcome to APS.edu! Bright Future for Your Child. Enroll your Child to be a part of our Family. Contact Us# +92-345-9627747,   Email:aps.school.oghi@gmail.com</div>
+
+</div>
+
+</body>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#qualities">Why APS</a>
+<a href="#posts">Updates</a>
+<a href="#contact">Contact</a>
+<a href="#login">Admin Login</a>
+</nav><div class="container"><section id="home" class="card">
+<h2>Welcome to APS.edu School</h2>
+<p>APS.edu School provides quality education with discipline, moral values, and modern teaching methodologies to prepare students for the future.</p>
+</section><section id="qualities" class="card">
+<h2>Professional Teaching & Modern Education</h2>
+<ul>
+<li>Qualified and experienced teaching staff</li>
+<li>Student-centered learning approach</li>
+<li>Modern curriculum with digital learning</li>
+<li>Strong focus on character building</li>
+<li>Safe, disciplined and friendly environment</li>
+<li>Preparation for future skills and careers</li>
+</ul>
+</section><section id="posts" class="card">
+<h2>School Updates</h2>
+<div id="adminPanel" class="hidden">
+<textarea id="postText" placeholder="Write announcement..."></textarea>
+<input type="file" id="postMedia" accept="image/*,video/*">
+<button onclick="addPost()">Publish</button>
+<hr>
+<label><b>Change School Logo</b></label>
+<input type="file" accept="image/*" onchange="changeLogo(event)">
+</div>
+<div id="postList"></div>
+</section><section id="contact" class="card">
+<h2>Contact Us</h2>
+<p><b>Email:</b> aps.school.oghi@gmail.com</p>
+<p><b>Phone:</b> +92-345-9627747</p>
+<p><b>Address:</b> APS.edu School,Miskeenabad, Oghi, District Mansehra, KPK Pakistan</p>
+</section><section id="login" class="card">
+<h2>Admin Login</h2>
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="loginMsg"></p>
+</section></div><footer>
+© 2025 APS.edu School | All Rights Reserved
+</footer><script>
+const ADMIN_USER='admin';
+const ADMIN_PASS='12345';
+let isAdmin=false;
+
+function login(){
+const u=username.value;
+const p=password.value;
+if(u===ADMIN_USER && p===ADMIN_PASS){
+isAdmin=true;
+adminPanel.classList.remove('hidden');
+loginMsg.innerText='Admin access granted';
+renderPosts();
+}else{
+loginMsg.innerText='Invalid login';
+}
+}
+
+function changeLogo(e){
+const file=e.target.files[0];
+const url=URL.createObjectURL(file);
+logoImg.src=url;
+localStorage.setItem('apsLogo.GIF',url);
+}
+
+function addPost(){
+const text=postText.value;
+const file=postMedia.files[0];
+if(!text && !file)return;
+let posts=JSON.parse(localStorage.getItem('posts')||'[]');
+let media=null,type=null;
+if(file){media=URL.createObjectURL(file);type=file.type.startsWith('image')?'img':'video';}
+posts.unshift({text,media,type});
+localStorage.setItem('posts',JSON.stringify(posts));
+postText.value='';postMedia.value='';
+renderPosts();
+}
+
+function deletePost(i){
+let posts=JSON.parse(localStorage.getItem('posts'));
+posts.splice(i,1);
+localStorage.setItem('posts',JSON.stringify(posts));
+renderPosts();
+}
+
+function renderPosts(){
+postList.innerHTML='';
+let posts=JSON.parse(localStorage.getItem('posts')||'[]');
+posts.forEach((p,i)=>{
+let d=document.createElement('div');d.className='post';
+if(p.text)d.innerHTML+='<p>'+p.text+'</p>';
+if(p.media){
+if(p.type==='img')d.innerHTML+='<img src="'+p.media+'">';
+else d.innerHTML+='<video src="'+p.media+'" controls></video>';
+}
+if(isAdmin)d.innerHTML+='<div class="actions"><button class="danger" onclick="deletePost('+i+')">Delete</button></div>';
+postList.appendChild(d);
+});
+}
+
+window.onload=function(){
+const logo=localStorage.getItem('apsLogo');
+if(logo)logoImg.src=logo;
+renderPosts();
+}
+</script></body>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My HTML Page with Images</title>
+    <style>
+        /* Make images responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Favorite Pictures</h1>
+
+    <!-- Local image (must be in the same folder or correct path) -->
+    <img src="5.png" alt="Best Offers" width="400"><img src="01.png" alt="Best Offers" width="500"><img src="02.png" alt="Best Offers" width="400">
+
+
+   
+    </a>
+
+</body>
+
+
+
+
+
+
+
+
+</html>
+
+
