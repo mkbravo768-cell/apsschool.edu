@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>School Homework Portal</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0;padding:15px}
+header{text-align:center;margin-bottom:15px}
+header img{height:80px}
+h1,h2{text-align:center}
+.box{background:#fff;padding:15px;margin:15px auto;max-width:900px;border-radius:8px;box-shadow:0 0 10px #ccc}
+select,input,textarea,button{width:100%;padding:8px;margin:6px 0}
+button{background:#2b7cff;color:#fff;border:none;border-radius:5px;cursor:pointer}
+button.delete{background:#d9534f;margin-top:5px}
+.hw{border-bottom:1px solid #ddd;padding:8px}
+.small{font-size:13px;color:#555}
+</style>
+</head>
+<body>
+
+
+
+<a href="index.html"><button>Back</button></a>
+
+
+
+
+
+
+
+
+
+
+<header>
+<img src="apsLogo.png" alt="">
+<h1>🏫 APS.Edu Oghi</h1>
+<p>Homework Portal (Playgroup to Class 10)</p>
+</header>
+
+<!-- Teacher Post Homework -->
+<div class="box">
+<h2>👩‍🏫 Teacher Post Homework</h2>
+<select id="tClass">
+<option>Playgroup</option><option>Nursery</option><option>KG</option>
+<option>Class 1</option><option>Class 2</option><option>Class 3</option>
+<option>Class 4</option><option>Class 5</option><option>Class 6</option>
+<option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
+</select>
+<input type="text" id="tName" placeholder="Teacher Name (No Login Required)">
+<input type="text" id="subject" placeholder="Subject">
+<textarea id="hwText" placeholder="Write Homework"></textarea>
+<button onclick="postHW()">Post Homework</button>
+</div>
+
+<!-- Student View -->
+<div class="box">
+<h2>🎒 Student Homework View</h2>
+<select id="sClass" onchange="showHW()">
+<option>Playgroup</option><option>Nursery</option><option>KG</option>
+<option>Class 1</option><option>Class 2</option><option>Class 3</option>
+<option>Class 4</option><option>Class 5</option><option>Class 6</option>
+<option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
+</select>
+<div id="hwList"></div>
+</div>
+
+<!-- Admin Login -->
+<div class="box">
+<h2>🔐 Admin Login (Only to Remove Homework)</h2>
+<input type="password" id="adminPass" placeholder="Admin Password">
+<button onclick="login()">Login</button>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "school123"; // change admin password here
+let admin = false;
+
+function load(){return JSON.parse(localStorage.getItem('homework')||'[]');}
+function save(d){localStorage.setItem('homework',JSON.stringify(d));}
+
+function postHW(){
+let d=load();
+let now=new Date();
+d.push({
+cls:tClass.value,
+teacher:tName.value,
+sub:subject.value,
+text:hwText.value,
+date:now.toDateString()
+});
+save(d);
+alert('Homework Posted Successfully');
+hwText.value='';
+showHW();
+}
+
+function showHW(){
+let d=load();
+let out='';
+d.forEach((h,i)=>{
+if(h.cls===sClass.value){
+out+=`<div class='hw'><b>${h.sub}</b><br>${h.text}<div class='small'>👩‍🏫 ${h.teacher} | 📅 ${h.date}</div>`;
+if(h.cls===sClass.value){
+out+=`<div class='hw'><b>${h.sub}</b><br>${h.text}<div class='small'>👩‍🏫 ${h.teacher} | 📅 ${h.date}</div>
+<button onclick="shareWA('${h.cls}','${h.sub}','${h.text}','${h.teacher}','${h.date}')">📤 Share on WhatsApp</button>`;
+if(admin) out+=`<button class='delete' onclick='del(${i})'>Remove</button>`;
+out+='</div>';
+}
+}}
+);
+hwList.innerHTML=out||'No Homework Available';
+}
+
+function del(i){let d=load();d.splice(i,1);save(d);showHW();}
+
+function shareWA(cls,sub,text,teacher,date){
+let msg=`🏫 Homework Update
+Class: ${cls}
+Subject: ${sub}
+Homework: ${text}
+Teacher: ${teacher}
+Date: ${date}`;
+let url='https://wa.me/?text='+encodeURIComponent(msg);
+window.open(url,'_blank');
+}
+
+function login(){
+if(adminPass.value===ADMIN_PASSWORD){admin=true;alert('Admin Login Successful');showHW();}
+else alert('Wrong Password');
+}
+
+showHW();
+</script>
+
+</body>
+</html>
